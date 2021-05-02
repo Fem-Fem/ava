@@ -1,12 +1,15 @@
-const test = require('@ava/test');
-const exec = require('../helpers/exec');
+import {promises as fs} from 'fs';
+import path from 'path';
 
-const fs = require('fs').promises;
-const path = require('path');
+import test from '@ava/test';
 
-require('../../lib/chalk').set({level: 0});
-require('../../lib/worker/options.cjs').set({});
-const {load} = require('../../lib/snapshot-manager');
+import {set as setChalk} from '../../lib/chalk.js';
+import {load} from '../../lib/snapshot-manager.js';
+import {set as setOptions} from '../../lib/worker/options.cjs';
+import * as exec from '../helpers/exec.js';
+
+setChalk({level: 0});
+setOptions({});
 
 test('snapshot report can be regenerated from .snap file', async t => {
 	const cwd = exec.cwd();

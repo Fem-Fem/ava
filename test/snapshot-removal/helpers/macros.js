@@ -1,9 +1,10 @@
-const fs = require('fs').promises;
-const exec = require('../../helpers/exec');
-const path = require('path');
-const {withTemporaryFixture} = require('../../helpers/with-temporary-fixture');
+import {promises as fs} from 'fs';
+import path from 'path';
 
-async function testSnapshotPruning(t, {
+import * as exec from '../../helpers/exec.js';
+import {withTemporaryFixture} from '../../helpers/with-temporary-fixture.js';
+
+export async function testSnapshotPruning(t, {
 	cwd,
 	env,
 	cli,
@@ -68,5 +69,3 @@ async function testSnapshotPruning(t, {
 		}
 	});
 }
-
-module.exports.testSnapshotPruning = testSnapshotPruning;

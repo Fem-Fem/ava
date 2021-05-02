@@ -1,5 +1,6 @@
-const test = require('@ava/test');
-const exec = require('../helpers/exec');
+import test from '@ava/test';
+
+import * as exec from '../helpers/exec.js';
 
 const options = {
 	// The scheduler only works when not in CI, so trick it into believing it is

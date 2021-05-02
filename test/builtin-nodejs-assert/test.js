@@ -1,5 +1,6 @@
-const test = require('@ava/test');
-const exec = require('../helpers/exec');
+import test from '@ava/test';
+
+import * as exec from '../helpers/exec.js';
 
 test('node assertion failures are reported to the console when running in a terminal', async t => {
 	const options = {

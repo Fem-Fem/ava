@@ -19,6 +19,7 @@
 			"require": "./entrypoints/plugin.cjs"
 		}
 	},
+	"type": "module",
 	"engines": {
 		"node": ">=12.22 <13 || >=14.15 <15 || >=16"
 	},

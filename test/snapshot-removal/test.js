@@ -1,9 +1,12 @@
-const test = require('@ava/test');
-const exec = require('../helpers/exec');
-const {testSnapshotPruning} = require('./helpers/macros');
-const {withTemporaryFixture} = require('../helpers/with-temporary-fixture');
-const fs = require('fs').promises;
-const path = require('path');
+import {promises as fs} from 'fs';
+import path from 'path';
+
+import test from '@ava/test';
+
+import * as exec from '../helpers/exec.js';
+import {withTemporaryFixture} from '../helpers/with-temporary-fixture.js';
+
+import {testSnapshotPruning} from './helpers/macros.js';
 
 // To update the test fixture templates, run:
 // npx test-ava test/snapshot-removal/** -- --update-fixture-snapshots

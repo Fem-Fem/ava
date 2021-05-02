@@ -1,8 +1,11 @@
-const test = require('@ava/test');
-const exec = require('../helpers/exec');
-const fs = require('fs');
-const path = require('path');
-const getSnapshotIds = require('./helpers/get-snapshot-ids');
+import fs from 'fs';
+import path from 'path';
+
+import test from '@ava/test';
+
+import * as exec from '../helpers/exec.js';
+
+import getSnapshotIds from './helpers/get-snapshot-ids.js';
 
 test('snapshot reports are sorted in declaration order', async t => {
 	const options = {

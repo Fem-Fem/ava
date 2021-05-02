@@ -1,8 +1,10 @@
-const test = require('@ava/test');
-const exec = require('../helpers/exec');
-const fs = require('fs').promises;
-const path = require('path');
-const {withTemporaryFixture} = require('../helpers/with-temporary-fixture');
+import {promises as fs} from 'fs';
+import path from 'path';
+
+import test from '@ava/test';
+
+import * as exec from '../helpers/exec.js';
+import {withTemporaryFixture} from '../helpers/with-temporary-fixture.js';
 
 test.serial('With invalid .snap file and --update-snapshots, skipped snaps are omitted', async t => {
 	await withTemporaryFixture(exec.cwd('invalid-snapfile'), async cwd => {

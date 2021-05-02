@@ -1,5 +1,6 @@
-const test = require('@ava/test');
-const exec = require('../../helpers/exec');
+import test from '@ava/test';
+
+import * as exec from '../../helpers/exec.js';
 
 test('availability', async t => {
 	await t.notThrowsAsync(exec.fixture(['available.js']));

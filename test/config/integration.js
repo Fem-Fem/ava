@@ -1,8 +1,10 @@
-const fs = require('fs');
-const path = require('path');
-const tempy = require('tempy');
-const test = require('@ava/test');
-const exec = require('../helpers/exec');
+import fs from 'fs';
+import path from 'path';
+
+import test from '@ava/test';
+import tempy from 'tempy';
+
+import * as exec from '../helpers/exec.js';
 
 test('formats errors from ava.config.js', async t => {
 	const options = {

@@ -1,3 +1,4 @@
+'use strict';
 const tty = require('tty');
 
 // Call original method to ensure the correct errors are thrown.

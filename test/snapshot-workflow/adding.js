@@ -1,10 +1,12 @@
-const test = require('@ava/test');
+import {promises as fs} from 'fs';
+import path from 'path';
 
-const exec = require('../helpers/exec');
-const path = require('path');
-const fs = require('fs').promises;
-const {beforeAndAfter} = require('./helpers/macros');
-const {withTemporaryFixture} = require('../helpers/with-temporary-fixture');
+import test from '@ava/test';
+
+import * as exec from '../helpers/exec.js';
+import {withTemporaryFixture} from '../helpers/with-temporary-fixture.js';
+
+import {beforeAndAfter} from './helpers/macros.js';
 
 test.serial('First run generates a .snap and a .md', async t => {
 	await withTemporaryFixture(exec.cwd('first-run'), async cwd => {

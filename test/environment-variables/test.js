@@ -1,5 +1,6 @@
-const test = require('@ava/test');
-const exec = require('../helpers/exec');
+import test from '@ava/test';
+
+import * as exec from '../helpers/exec.js';
 
 test('sets default environment variables from the config', async t => {
 	const options = {

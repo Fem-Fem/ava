@@ -1,5 +1,6 @@
-const test = require('@ava/test');
-const exec = require('../../helpers/exec');
+import test from '@ava/test';
+
+import * as exec from '../../helpers/exec.js';
 
 test('must negotiate a supported protocol in the test worker', async t => {
 	const result = await t.throwsAsync(exec.fixture(['in-test-worker.js']));

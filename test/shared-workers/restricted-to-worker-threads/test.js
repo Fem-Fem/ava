@@ -1,5 +1,6 @@
-const test = require('@ava/test');
-const exec = require('../../helpers/exec');
+import test from '@ava/test';
+
+import * as exec from '../../helpers/exec.js';
 
 test('can only be used when worker threads are enabled', async t => {
 	let result = await t.throwsAsync(exec.fixture(['--no-worker-threads']));

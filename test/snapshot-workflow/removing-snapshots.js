@@ -1,6 +1,8 @@
-const test = require('@ava/test');
-const exec = require('../helpers/exec');
-const {beforeAndAfter} = require('./helpers/macros');
+import test from '@ava/test';
+
+import * as exec from '../helpers/exec.js';
+
+import {beforeAndAfter} from './helpers/macros.js';
 
 test.serial(
 	'Removing a snapshot assertion retains its data',

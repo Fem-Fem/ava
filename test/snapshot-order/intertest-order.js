@@ -1,7 +1,9 @@
-const test = require('@ava/test');
-const exec = require('../helpers/exec');
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+
+import test from '@ava/test';
+
+import * as exec from '../helpers/exec.js';
 
 test('snapshot files are independent of test resolution order', async t => {
 	const options = {
