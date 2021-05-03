@@ -1,7 +1,7 @@
 import fs from 'fs';
 import {fileURLToPath} from 'url';
 
-import ChalkInstance from 'chalk';
+import _chalk from 'chalk';
 import {test} from 'tap';
 import tempWrite from 'temp-write';
 
@@ -10,7 +10,7 @@ import codeExcerpt from '../lib/code-excerpt.js';
 
 setChalk({level: 1});
 
-const chalk = new ChalkInstance({level: 1});
+const chalk = new _chalk.Instance({level: 1});
 
 test('read code excerpt', t => {
 	const file = tempWrite.sync([

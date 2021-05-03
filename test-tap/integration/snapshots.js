@@ -8,7 +8,7 @@ import tempy from 'tempy';
 
 import {execCli} from '../helper/cli.js';
 
-const __dirname = fileURLToPath(new URL('..', import.meta.url));
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 for (const object of [
 	{type: 'colocated', rel: '', dir: ''},
@@ -52,13 +52,13 @@ test('appends to existing snapshots', t => {
 test('one', t => {
 	t.snapshot({one: true})
 })`;
-	fs.writeFileSync(path.join(cwd, 'test.js'), initial);
+	fs.writeFileSync(path.join(cwd, 'test.cjs'), initial);
 
 	const run = () => execa(process.execPath, [cliPath, '--verbose', '--no-color'], {cwd, env: {AVA_FORCE_CI: 'not-ci'}, reject: false});
 	return run().then(result => {
 		t.match(result.stdout, /1 test passed/);
 
-		fs.writeFileSync(path.join(cwd, 'test.js'), `${initial}
+		fs.writeFileSync(path.join(cwd, 'test.cjs'), `${initial}
 test('two', t => {
 	t.snapshot({two: true})
 })`);
@@ -66,7 +66,7 @@ test('two', t => {
 	}).then(result => {
 		t.match(result.stdout, /2 tests passed/);
 
-		fs.writeFileSync(path.join(cwd, 'test.js'), `${initial}
+		fs.writeFileSync(path.join(cwd, 'test.cjs'), `${initial}
 test('two', t => {
 	t.snapshot({two: false})
 })`);
@@ -81,7 +81,7 @@ test('outdated snapshot version is reported to the console', t => {
 	const snapPath = path.join(__dirname, '..', 'fixture', 'snapshots', 'test.js.snap');
 	fs.writeFileSync(snapPath, Buffer.from([0x0A, 0x00, 0x00]));
 
-	execCli(['test.js'], {dirname: 'fixture/snapshots'}, (error, stdout) => {
+	execCli(['test.cjs'], {dirname: 'fixture/snapshots'}, (error, stdout) => {
 		t.ok(error);
 		t.match(stdout, /The snapshot file is v0, but only v3 is supported\./);
 		t.match(stdout, /File path:/);
@@ -95,7 +95,7 @@ test('outdated snapshot version can be updated', t => {
 	const snapPath = path.join(__dirname, '..', 'fixture', 'snapshots', 'test.js.snap');
 	fs.writeFileSync(snapPath, Buffer.from([0x0A, 0x00, 0x00]));
 
-	execCli(['test.js', '--update-snapshots'], {dirname: 'fixture/snapshots', env: {AVA_FORCE_CI: 'not-ci'}}, (error, stdout) => {
+	execCli(['test.cjs', '--update-snapshots'], {dirname: 'fixture/snapshots', env: {AVA_FORCE_CI: 'not-ci'}}, (error, stdout) => {
 		t.error(error);
 		t.match(stdout, /2 tests passed/);
 		t.end();
@@ -106,7 +106,7 @@ test('newer snapshot version is reported to the console', t => {
 	const snapPath = path.join(__dirname, '..', 'fixture', 'snapshots', 'test.js.snap');
 	fs.writeFileSync(snapPath, Buffer.from([0x0A, 0xFF, 0xFF]));
 
-	execCli(['test.js'], {dirname: 'fixture/snapshots'}, (error, stdout) => {
+	execCli(['test.cjs'], {dirname: 'fixture/snapshots'}, (error, stdout) => {
 		t.ok(error);
 		t.match(stdout, /The snapshot file is v65535, but only v3 is supported\./);
 		t.match(stdout, /File path:/);
@@ -120,7 +120,7 @@ test('snapshot corruption is reported to the console', t => {
 	const snapPath = path.join(__dirname, '..', 'fixture', 'snapshots', 'test.js.snap');
 	fs.writeFileSync(snapPath, Buffer.from([0x0A, 0x03, 0x00]));
 
-	execCli(['test.js'], {dirname: 'fixture/snapshots'}, (error, stdout) => {
+	execCli(['test.cjs'], {dirname: 'fixture/snapshots'}, (error, stdout) => {
 		t.ok(error);
 		t.match(stdout, /The snapshot file is corrupted\./);
 		t.match(stdout, /File path:/);
@@ -134,7 +134,7 @@ test('legacy snapshot files are reported to the console', t => {
 	const snapPath = path.join(__dirname, '..', 'fixture', 'snapshots', 'test.js.snap');
 	fs.writeFileSync(snapPath, Buffer.from('// Jest Snapshot v1, https://goo.gl/fbAQLP\n'));
 
-	execCli(['test.js'], {dirname: 'fixture/snapshots'}, (error, stdout) => {
+	execCli(['test.cjs'], {dirname: 'fixture/snapshots'}, (error, stdout) => {
 		t.ok(error);
 		t.match(stdout, /The snapshot file was created with AVA 0\.19\. It’s not supported by this AVA version\./);
 		t.match(stdout, /File path:/);

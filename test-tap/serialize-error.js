@@ -1,6 +1,6 @@
 import {test} from 'tap';
 
-import avaAssert from '../lib/assert.js';
+import * as avaAssert from '../lib/assert.js';
 import serializeError from '../lib/serialize-error.js';
 import {set as setOptions} from '../lib/worker/options.cjs';
 

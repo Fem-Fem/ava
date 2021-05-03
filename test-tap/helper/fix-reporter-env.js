@@ -2,7 +2,7 @@ import os from 'os';
 
 import fakeTimers from '@sinonjs/fake-timers';
 
-import {set as setChalk} from '../lib/chalk.js';
+import {set as setChalk} from '../../lib/chalk.js';
 
 const fixColors = () => {
 	// Force consistent and high-fidelity logs.

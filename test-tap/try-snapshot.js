@@ -4,7 +4,7 @@ import {fileURLToPath} from 'url';
 import {test} from 'tap';
 
 import ContextRef from '../lib/context-ref.js';
-import snapshotManager from '../lib/snapshot-manager.js';
+import * as snapshotManager from '../lib/snapshot-manager.js';
 import Test from '../lib/test.js';
 import {set as setOptions} from '../lib/worker/options.cjs';
 
@@ -32,7 +32,7 @@ test(async t => {
 
 	const projectDir = fileURLToPath(new URL('fixture', import.meta.url));
 	const manager = snapshotManager.load({
-		file: path.join(projectDir, 'try-snapshot.js'),
+		file: path.join(projectDir, 'try-snapshot.cjs'),
 		projectDir,
 		fixedLocation: null,
 		updating,

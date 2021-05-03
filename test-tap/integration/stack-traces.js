@@ -3,7 +3,7 @@ import {test} from 'tap';
 import {execCli} from '../helper/cli.js';
 
 test('`AssertionError` should capture infinity stack trace', t => {
-	execCli('infinity-stack-trace.js', (err, stdout) => {
+	execCli('infinity-stack-trace.cjs', (err, stdout) => {
 		t.ok(err);
 		t.match(stdout, /c \(.*infinity-stack-trace\.js:6:20\)/);
 		t.match(stdout, /b \(.*infinity-stack-trace\.js:7:18\)/);

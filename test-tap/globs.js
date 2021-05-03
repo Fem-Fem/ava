@@ -3,11 +3,11 @@ import {fileURLToPath} from 'url';
 
 import tap from 'tap';
 
-import globs from '../lib/globs.js';
+import * as globs from '../lib/globs.js';
 
 const {test} = tap;
 
-const __dirname = fileURLToPath(new URL('..', import.meta.url));
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 tap.afterEach(() => {
 	// We changed the CWD in some of the tests

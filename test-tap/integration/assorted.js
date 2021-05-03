@@ -8,10 +8,10 @@ import {test} from 'tap';
 
 import {execCli} from '../helper/cli.js';
 
-const __dirname = fileURLToPath(new URL('..', import.meta.url));
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 test('timeout', t => {
-	execCli(['long-running.js', '-T', '1s'], (err, stdout) => {
+	execCli(['long-running.cjs', '-T', '1s'], (err, stdout) => {
 		t.ok(err);
 		t.match(stdout, /Timed out/);
 		t.end();
@@ -20,7 +20,7 @@ test('timeout', t => {
 
 // FIXME: This test fails in CI, but not locally. Re-enable at some point…
 // test('interrupt', t => {
-// 	const proc = execCli(['long-running.js'], (_, stdout) => {
+// 	const proc = execCli(['long-running.cjs'], (_, stdout) => {
 // 		t.match(stdout, /SIGINT/);
 // 		t.end();
 // 	});
@@ -31,7 +31,7 @@ test('timeout', t => {
 // });
 
 test('include anonymous functions in error reports', t => {
-	execCli('error-in-anonymous-function.js', (err, stdout) => {
+	execCli('error-in-anonymous-function.cjs', (err, stdout) => {
 		t.ok(err);
 		t.match(stdout, /error-in-anonymous-function\.js:4:8/);
 		t.end();
@@ -39,7 +39,7 @@ test('include anonymous functions in error reports', t => {
 });
 
 test('--match works', t => {
-	execCli(['-m=foo', '-m=bar', '-m=!baz', '-m=t* a* f*', '-m=!t* a* n* f*', 'matcher-skip.js'], err => {
+	execCli(['-m=foo', '-m=bar', '-m=!baz', '-m=t* a* f*', '-m=!t* a* n* f*', 'matcher-skip.cjs'], err => {
 		t.error(err);
 		t.end();
 	});
@@ -47,7 +47,7 @@ test('--match works', t => {
 
 for (const tapFlag of ['--tap', '-t']) {
 	test(`${tapFlag} should produce TAP output`, t => {
-		execCli([tapFlag, 'test.js'], {dirname: 'fixture/watcher'}, err => {
+		execCli([tapFlag, 'test.cjs'], {dirname: 'fixture/watcher'}, err => {
 			t.ok(!err);
 			t.end();
 		});
@@ -78,7 +78,7 @@ test('tests without assertions do not fail if failWithoutAssertions option is se
 });
 
 test('--no-color disables formatting colors', t => {
-	execCli(['--no-color', '--verbose', 'formatting-color.js'], (err, stdout) => {
+	execCli(['--no-color', '--verbose', 'formatting-color.cjs'], (err, stdout) => {
 		t.ok(err);
 		t.equal(stripAnsi(stdout), stdout);
 		t.end();
@@ -86,7 +86,7 @@ test('--no-color disables formatting colors', t => {
 });
 
 test('--color enables formatting colors', t => {
-	execCli(['--color', '--verbose', 'formatting-color.js'], (err, stdout) => {
+	execCli(['--color', '--verbose', 'formatting-color.cjs'], (err, stdout) => {
 		t.ok(err);
 		t.not(stripAnsi(stdout), stdout);
 		t.end();
@@ -94,7 +94,7 @@ test('--color enables formatting colors', t => {
 });
 
 test('sets NODE_ENV to test when it is not set', t => {
-	execCli('node-env-test.js', {env: {}}, (err, stdout) => {
+	execCli('node-env-test.cjs', {env: {}}, (err, stdout) => {
 		t.error(err);
 		t.match(stdout, /1 test passed/);
 		t.end();
@@ -102,7 +102,7 @@ test('sets NODE_ENV to test when it is not set', t => {
 });
 
 test('doesn’t set NODE_ENV when it is set', t => {
-	execCli('node-env-foo.js', {env: {NODE_ENV: 'foo'}}, (err, stdout) => {
+	execCli('node-env-foo.cjs', {env: {NODE_ENV: 'foo'}}, (err, stdout) => {
 		t.error(err);
 		t.match(stdout, /1 test passed/);
 		t.end();
@@ -110,7 +110,7 @@ test('doesn’t set NODE_ENV when it is set', t => {
 });
 
 test('additional arguments are forwarded to the worker', t => {
-	execCli(['worker-argv.js', '--serial', '--', '--hello', 'world'], err => {
+	execCli(['worker-argv.cjs', '--serial', '--', '--hello', 'world'], err => {
 		t.error(err);
 		t.end();
 	});
@@ -146,7 +146,7 @@ test('load .mjs test files', t => {
 });
 
 test('load .js test files as ESM modules', t => {
-	execCli('test.js', {dirname: 'fixture/pkg-type-module'}, (err, stdout) => {
+	execCli('test.cjs', {dirname: 'fixture/pkg-type-module'}, (err, stdout) => {
 		t.error(err);
 		t.match(stdout, /1 test passed/);
 		t.end();

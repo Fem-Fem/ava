@@ -12,7 +12,7 @@ import {normalizeGlobs} from '../../lib/globs.js';
 import pkg from '../../lib/pkg.cjs';
 import providerManager from '../../lib/provider-manager.js';
 
-const workerFile = fileURLToPath(new URL('report-worker.js', import.meta.url));
+const workerFile = fileURLToPath(new URL('report-worker.cjs', import.meta.url));
 
 class Worker extends workerThreads.Worker {
 	constructor(filename, options) {
@@ -86,11 +86,11 @@ exports.sanitizers = {
 	experimentalWarning: string => string.replace(/^\(node:\d+\) ExperimentalWarning.+\n/g, ''),
 	lineEndings: string => replaceString(string, '\r\n', '\n'),
 	posix: string => replaceString(string, '\\', '/'),
-	timers: string => string.replace(/timers\.js:\d+:\d+/g, 'timers.js'),
+	timers: string => string.replace(/timers\.js:\d+:\d+/g, 'timers.cjs'),
 	version: string => replaceString(string, `v${pkg.version}`, 'v1.0.0-beta.5.1')
 };
 
-const __dirname = fileURLToPath(new URL('..', import.meta.url));
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 exports.projectDir = type => path.join(__dirname, '../fixture/report', type.toLowerCase());
 
 const run = (type, reporter, {match = [], filter} = {}) => {
@@ -131,7 +131,7 @@ const run = (type, reporter, {match = [], filter} = {}) => {
 	const api = createApi(options);
 	api.on('run', plan => reporter.startRun(plan));
 
-	const files = globby.sync('*.js', {
+	const files = globby.sync('*.cjs', {
 		absolute: true,
 		brace: true,
 		case: false,
@@ -176,7 +176,7 @@ exports.watch = reporter => run('watch', reporter);
 exports.edgeCases = reporter => run('edgeCases', reporter, {
 	filter: [
 		{pattern: '**/*'},
-		{pattern: '**/test.js', lineNumbers: [2]},
-		{pattern: '**/ast-syntax-error.js', lineNumbers: [7]}
+		{pattern: '**/test.cjs', lineNumbers: [2]},
+		{pattern: '**/ast-syntax-error.cjs', lineNumbers: [7]}
 	]
 });

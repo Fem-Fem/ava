@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import {test} from 'tap';
 
 import {set as setChalk} from '../lib/chalk.js';
-import snapshotManager from '../lib/snapshot-manager.js';
+import * as snapshotManager from '../lib/snapshot-manager.js';
 import Test from '../lib/test.js';
 import {set as setOptions} from '../lib/worker/options.cjs';
 
@@ -535,7 +535,7 @@ test('assertions are bound', t => {
 test('snapshot assertion can be skipped', t => {
 	const projectDir = fileURLToPath(new URL('fixture', import.meta.url));
 	const manager = snapshotManager.load({
-		file: path.join(projectDir, 'assert.js'),
+		file: path.join(projectDir, 'assert.cjs'),
 		projectDir,
 		fixedLocation: null,
 		recordNewSnapshots: true,
@@ -561,7 +561,7 @@ test('snapshot assertion can be skipped', t => {
 test('snapshot assertions call options.skipSnapshot when skipped', async t => {
 	const projectDir = fileURLToPath(new URL('fixture', import.meta.url));
 	const manager = snapshotManager.load({
-		file: path.join(projectDir, 'assert.js'),
+		file: path.join(projectDir, 'assert.cjs'),
 		projectDir,
 		fixedLocation: null,
 		updating: false

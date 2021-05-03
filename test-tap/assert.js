@@ -4,8 +4,8 @@ import {fileURLToPath} from 'url';
 import stripAnsi from 'strip-ansi';
 import {test} from 'tap';
 
-import assert from '../lib/assert.js';
-import snapshotManager from '../lib/snapshot-manager.js';
+import * as assert from '../lib/assert.js';
+import * as snapshotManager from '../lib/snapshot-manager.js';
 import {set as setOptions} from '../lib/worker/options.cjs';
 
 setOptions({chalkOptions: {level: 0}});
@@ -1624,7 +1624,7 @@ test('.snapshot()', t => {
 
 	const projectDir = fileURLToPath(new URL('fixture', import.meta.url));
 	const manager = snapshotManager.load({
-		file: path.join(projectDir, 'assert.js'),
+		file: path.join(projectDir, 'assert.cjs'),
 		projectDir,
 		fixedLocation: null,
 		recordNewSnapshots: updating,

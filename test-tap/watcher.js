@@ -125,8 +125,8 @@ group('chokidar', (beforeEach, test, group) => {
 
 		api.run.returns(new Promise(() => {}));
 		files = [
-			'test.js',
-			'test-*.js',
+			'test.cjs',
+			'test-*.cjs',
 			'test/**/*.js'
 		];
 		defaultApiOptions = {
@@ -152,15 +152,15 @@ group('chokidar', (beforeEach, test, group) => {
 	};
 
 	const add = path => {
-		emitChokidar('add', path || 'source.js');
+		emitChokidar('add', path || 'source.cjs');
 	};
 
 	const change = path => {
-		emitChokidar('change', path || 'source.js');
+		emitChokidar('change', path || 'source.cjs');
 	};
 
 	const unlink = path => {
-		emitChokidar('unlink', path || 'source.js');
+		emitChokidar('unlink', path || 'source.cjs');
 	};
 
 	const delay = () => new Promise(resolve => {
@@ -188,7 +188,7 @@ group('chokidar', (beforeEach, test, group) => {
 			['**/*'],
 			{
 				cwd: process.cwd(),
-				ignored: [...defaultIgnore.map(dir => `${dir}/**/*`), '**/node_modules/**/*', '**/*.snap.md', 'ava.config.js', 'ava.config.cjs'],
+				ignored: [...defaultIgnore.map(dir => `${dir}/**/*`), '**/node_modules/**/*', '**/*.snap.md', 'ava.config.cjs', 'ava.config.cjs'],
 				ignoreInitial: true
 			}
 		]);
@@ -196,7 +196,7 @@ group('chokidar', (beforeEach, test, group) => {
 
 	test('ignored files are configurable', t => {
 		t.plan(2);
-		const ignoredByWatcher = ['!foo.js', 'bar.js', '!baz.js', 'qux.js'];
+		const ignoredByWatcher = ['!foo.cjs', 'bar.cjs', '!baz.cjs', 'qux.cjs'];
 		start(ignoredByWatcher);
 
 		t.ok(chokidar.watch.calledOnce);
@@ -204,7 +204,7 @@ group('chokidar', (beforeEach, test, group) => {
 			['**/*'],
 			{
 				cwd: process.cwd(),
-				ignored: [...defaultIgnore.map(dir => `${dir}/**/*`), '**/node_modules/**/*', '**/*.snap.md', 'ava.config.js', 'ava.config.cjs', 'bar.js', 'qux.js'],
+				ignored: [...defaultIgnore.map(dir => `${dir}/**/*`), '**/node_modules/**/*', '**/*.snap.md', 'ava.config.cjs', 'ava.config.cjs', 'bar.cjs', 'qux.cjs'],
 				ignoreInitial: true
 			}
 		]);
@@ -255,9 +255,9 @@ group('chokidar', (beforeEach, test, group) => {
 			t.plan(2);
 			start();
 
-			variant.fire('file.js');
+			variant.fire('file.cjs');
 			t.ok(debug.calledOnce);
-			t.strictSame(debug.firstCall.args, ['ava:watcher', 'Detected %s of %s', variant.event, 'file.js']);
+			t.strictSame(debug.firstCall.args, ['ava:watcher', 'Detected %s of %s', variant.event, 'file.cjs']);
 		});
 	}
 
@@ -468,11 +468,11 @@ group('chokidar', (beforeEach, test, group) => {
 				};
 			}));
 
-			variant.fire('test.js');
+			variant.fire('test.cjs');
 			return debounce().then(() => {
 				t.ok(api.run.calledTwice);
 				// The `test.js` file is provided
-				t.strictSame(api.run.secondCall.args, [{files: [path.resolve('test.js')], filter: [], runtimeOptions: {
+				t.strictSame(api.run.secondCall.args, [{files: [path.resolve('test.cjs')], filter: [], runtimeOptions: {
 					...defaultApiOptions,
 					clearLogOnNextRun: true,
 					runVector: 2
@@ -495,12 +495,12 @@ group('chokidar', (beforeEach, test, group) => {
 		api.run.returns(Promise.resolve(runStatus));
 		start();
 
-		add('test-one.js');
-		change('test-two.js');
+		add('test-one.cjs');
+		change('test-two.cjs');
 		return debounce(2).then(() => {
 			t.ok(api.run.calledTwice);
 			// The test files are provided
-			t.strictSame(api.run.secondCall.args, [{files: [path.resolve('test-one.js'), path.resolve('test-two.js')], filter: [], runtimeOptions: {
+			t.strictSame(api.run.secondCall.args, [{files: [path.resolve('test-one.cjs'), path.resolve('test-two.cjs')], filter: [], runtimeOptions: {
 				...defaultApiOptions,
 				clearLogOnNextRun: true,
 				runVector: 2
@@ -513,8 +513,8 @@ group('chokidar', (beforeEach, test, group) => {
 		api.run.returns(Promise.resolve(runStatus));
 		start();
 
-		add('test.js');
-		unlink('source.js');
+		add('test.cjs');
+		unlink('source.cjs');
 		return debounce(2).then(() => {
 			t.ok(api.run.calledTwice);
 			// No explicit files are provided
@@ -531,7 +531,7 @@ group('chokidar', (beforeEach, test, group) => {
 		api.run.returns(Promise.resolve(runStatus));
 		start();
 
-		unlink('test.js');
+		unlink('test.cjs');
 		return debounce().then(() => {
 			t.ok(api.run.calledOnce);
 		});
@@ -540,15 +540,15 @@ group('chokidar', (beforeEach, test, group) => {
 	test('determines whether changed files are tests based on the initial files patterns', t => {
 		t.plan(2);
 
-		files = ['foo-{bar,baz}.js'];
+		files = ['foo-{bar,baz}.cjs'];
 		api.run.returns(Promise.resolve(runStatus));
 		start();
 
-		add('foo-bar.js');
-		add('foo-baz.js');
+		add('foo-bar.cjs');
+		add('foo-baz.cjs');
 		return debounce(2).then(() => {
 			t.ok(api.run.calledTwice);
-			t.strictSame(api.run.secondCall.args, [{files: [path.resolve('foo-bar.js'), path.resolve('foo-baz.js')], filter: [], runtimeOptions: {
+			t.strictSame(api.run.secondCall.args, [{files: [path.resolve('foo-bar.cjs'), path.resolve('foo-baz.cjs')], filter: [], runtimeOptions: {
 				...defaultApiOptions,
 				clearLogOnNextRun: true,
 				runVector: 2
@@ -601,7 +601,7 @@ group('chokidar', (beforeEach, test, group) => {
 		api.run.returns(Promise.resolve(runStatus));
 		start().observeStdin(stdin);
 
-		add('test-one.js');
+		add('test-one.cjs');
 		await debounce();
 		t.ok(api.run.calledTwice);
 
@@ -609,13 +609,13 @@ group('chokidar', (beforeEach, test, group) => {
 		await delay();
 
 		t.ok(api.run.calledThrice);
-		t.strictSame(api.run.thirdCall.args, [{files: [path.resolve('test-one.js')], filter: [], runtimeOptions: {...options, runVector: 3}}]);
+		t.strictSame(api.run.thirdCall.args, [{files: [path.resolve('test-one.cjs')], filter: [], runtimeOptions: {...options, runVector: 3}}]);
 
 		stdin.write('\tu  \n');
 		await delay();
 
 		t.equal(api.run.callCount, 4);
-		t.strictSame(api.run.lastCall.args, [{files: [path.resolve('test-one.js')], filter: [], runtimeOptions: {...options, runVector: 4}}]);
+		t.strictSame(api.run.lastCall.args, [{files: [path.resolve('test-one.cjs')], filter: [], runtimeOptions: {...options, runVector: 4}}]);
 	});
 
 	for (const input of ['r', 'rs', 'u']) {
@@ -729,7 +729,7 @@ group('chokidar', (beforeEach, test, group) => {
 		api.run.returns(Promise.resolve(runStatus));
 		start();
 
-		emitChokidar('foo', 'foo.js');
+		emitChokidar('foo', 'foo.cjs');
 		return debounce().then(() => {
 			t.ok(api.run.calledOnce);
 		});
@@ -824,14 +824,14 @@ group('chokidar', (beforeEach, test, group) => {
 			}));
 
 			const watcher = start(ignoredByWatcher);
-			const files = [path.join('test', '1.js'), path.join('test', '2.js')];
+			const files = [path.join('test', '1.cjs'), path.join('test', '2.cjs')];
 			const absFiles = files.map(relFile => path.resolve(relFile));
 			apiEmitter.emit('run', {
 				files: absFiles,
 				status: runStatus
 			});
-			emitDependencies(path.resolve(files[0]), [path.resolve('dep-1.js'), path.resolve('dep-3.js')]);
-			emitDependencies(path.resolve(files[1]), [path.resolve('dep-2.js'), path.resolve('dep-3.js')]);
+			emitDependencies(path.resolve(files[0]), [path.resolve('dep-1.cjs'), path.resolve('dep-3.cjs')]);
+			emitDependencies(path.resolve(files[1]), [path.resolve('dep-2.cjs'), path.resolve('dep-3.cjs')]);
 
 			done();
 			api.run.returns(new Promise(() => {}));
@@ -842,10 +842,10 @@ group('chokidar', (beforeEach, test, group) => {
 			t.plan(2);
 			seed();
 
-			change('dep-1.js');
+			change('dep-1.cjs');
 			return debounce().then(() => {
 				t.ok(api.run.calledTwice);
-				t.strictSame(api.run.secondCall.args, [{files: [path.resolve(path.join('test', '1.js'))], filter: [], runtimeOptions: {
+				t.strictSame(api.run.secondCall.args, [{files: [path.resolve(path.join('test', '1.cjs'))], filter: [], runtimeOptions: {
 					...defaultApiOptions,
 					clearLogOnNextRun: true,
 					runVector: 2
@@ -857,7 +857,7 @@ group('chokidar', (beforeEach, test, group) => {
 			t.plan(2);
 			seed();
 
-			change('cannot-be-mapped.js');
+			change('cannot-be-mapped.cjs');
 			return debounce().then(() => {
 				t.ok(api.run.calledTwice);
 				t.strictSame(api.run.secondCall.args, [{files: [], filter: [], runtimeOptions: {
@@ -872,12 +872,12 @@ group('chokidar', (beforeEach, test, group) => {
 			t.plan(2);
 			seed();
 
-			change('dep-1.js');
-			change(path.join('test', '2.js'));
+			change('dep-1.cjs');
+			change(path.join('test', '2.cjs'));
 			return debounce(2).then(() => {
 				t.ok(api.run.calledTwice);
 				t.strictSame(api.run.secondCall.args, [{
-					files: [path.resolve(path.join('test', '2.js')), path.resolve(path.join('test', '1.js'))],
+					files: [path.resolve(path.join('test', '2.cjs')), path.resolve(path.join('test', '1.cjs'))],
 					filter: [],
 					runtimeOptions: {
 						...defaultApiOptions,
@@ -892,11 +892,11 @@ group('chokidar', (beforeEach, test, group) => {
 			t.plan(2);
 			seed();
 
-			change(path.join('test', '1.js'));
-			change('dep-1.js');
+			change(path.join('test', '1.cjs'));
+			change('dep-1.cjs');
 			return debounce(2).then(() => {
 				t.ok(api.run.calledTwice);
-				t.strictSame(api.run.secondCall.args, [{files: [path.resolve(path.join('test', '1.js'))], filter: [], runtimeOptions: {
+				t.strictSame(api.run.secondCall.args, [{files: [path.resolve(path.join('test', '1.cjs'))], filter: [], runtimeOptions: {
 					...defaultApiOptions,
 					clearLogOnNextRun: true,
 					runVector: 2
@@ -908,11 +908,11 @@ group('chokidar', (beforeEach, test, group) => {
 			t.plan(2);
 			seed();
 
-			unlink(path.join('test', '1.js'));
-			change('dep-3.js');
+			unlink(path.join('test', '1.cjs'));
+			change('dep-3.cjs');
 			return debounce(2).then(() => {
 				t.ok(api.run.calledTwice);
-				t.strictSame(api.run.secondCall.args, [{files: [path.resolve(path.join('test', '2.js'))], filter: [], runtimeOptions: {
+				t.strictSame(api.run.secondCall.args, [{files: [path.resolve(path.join('test', '2.cjs'))], filter: [], runtimeOptions: {
 					...defaultApiOptions,
 					clearLogOnNextRun: true,
 					runVector: 2
@@ -924,11 +924,11 @@ group('chokidar', (beforeEach, test, group) => {
 			t.plan(2);
 			seed();
 
-			emitDependencies(path.resolve(path.join('test', '1.js')), [path.resolve('dep-4.js')]);
-			change('dep-4.js');
+			emitDependencies(path.resolve(path.join('test', '1.cjs')), [path.resolve('dep-4.cjs')]);
+			change('dep-4.cjs');
 			return debounce().then(() => {
 				t.ok(api.run.calledTwice);
-				t.strictSame(api.run.secondCall.args, [{files: [path.resolve(path.join('test', '1.js'))], filter: [], runtimeOptions: {
+				t.strictSame(api.run.secondCall.args, [{files: [path.resolve(path.join('test', '1.cjs'))], filter: [], runtimeOptions: {
 					...defaultApiOptions,
 					clearLogOnNextRun: true,
 					runVector: 2
@@ -939,11 +939,11 @@ group('chokidar', (beforeEach, test, group) => {
 		for (const variant of [
 			{
 				desc: 'does not track ignored dependencies',
-				ignoredByWatcher: ['dep-2.js']
+				ignoredByWatcher: ['dep-2.cjs']
 			},
 			{
 				desc: 'exclusion patterns affect tracked source dependencies',
-				ignoredByWatcher: ['dep-2.js']
+				ignoredByWatcher: ['dep-2.cjs']
 			}
 		]) {
 			test(variant.desc, t => {
@@ -953,7 +953,7 @@ group('chokidar', (beforeEach, test, group) => {
 				// `dep-2.js` isn't treated as a source and therefore it's not tracked as
 				// a dependency for `test/2.js`. Pretend Chokidar detected a change to
 				// verify (normally Chokidar would also be ignoring this file but hey).
-				change('dep-2.js');
+				change('dep-2.cjs');
 				return debounce().then(() => {
 					t.ok(api.run.calledTwice);
 					// Expect all tests to be rerun since `dep-2.js` is not a tracked
@@ -971,16 +971,16 @@ group('chokidar', (beforeEach, test, group) => {
 			t.plan(2);
 			seed();
 
-			emitDependencies(path.join('test', '1.js'), [path.resolve('package.json'), path.resolve('index.js'), path.resolve('lib/util.js')]);
-			emitDependencies(path.join('test', '2.js'), [path.resolve('foo.bar')]);
+			emitDependencies(path.join('test', '1.cjs'), [path.resolve('package.json'), path.resolve('index.cjs'), path.resolve('lib/util.cjs')]);
+			emitDependencies(path.join('test', '2.cjs'), [path.resolve('foo.bar')]);
 			change('package.json');
-			change('index.js');
-			change(path.join('lib', 'util.js'));
+			change('index.cjs');
+			change(path.join('lib', 'util.cjs'));
 
 			api.run.returns(Promise.resolve(runStatus));
 			return debounce(3).then(() => {
 				t.ok(api.run.calledTwice);
-				t.strictSame(api.run.secondCall.args, [{files: [path.join('test', '1.js')], filter: [], runtimeOptions: {
+				t.strictSame(api.run.secondCall.args, [{files: [path.join('test', '1.cjs')], filter: [], runtimeOptions: {
 					...defaultApiOptions,
 					clearLogOnNextRun: true,
 					runVector: 2
@@ -1007,8 +1007,8 @@ group('chokidar', (beforeEach, test, group) => {
 
 			// Ensure `test/1.js` also depends on the excluded files
 			emitDependencies(
-				path.join('test', '1.js'),
-				[...excludedFiles.map(relPath => path.resolve(relPath)), 'dep-1.js']
+				path.join('test', '1.cjs'),
+				[...excludedFiles.map(relPath => path.resolve(relPath)), 'dep-1.cjs']
 			);
 
 			// Modify all excluded files
@@ -1032,10 +1032,10 @@ group('chokidar', (beforeEach, test, group) => {
 			t.plan(2);
 			seed();
 
-			change('dep-1.js');
+			change('dep-1.cjs');
 			return debounce().then(() => {
 				t.ok(debug.calledTwice);
-				t.strictSame(debug.secondCall.args, ['ava:watcher', '%s is a dependency of %s', path.resolve('dep-1.js'), path.resolve(path.join('test', '1.js'))]);
+				t.strictSame(debug.secondCall.args, ['ava:watcher', '%s is a dependency of %s', path.resolve('dep-1.cjs'), path.resolve(path.join('test', '1.cjs'))]);
 			});
 		});
 
@@ -1043,10 +1043,10 @@ group('chokidar', (beforeEach, test, group) => {
 			t.plan(3);
 			seed();
 
-			change('cannot-be-mapped.js');
+			change('cannot-be-mapped.cjs');
 			return debounce().then(() => {
 				t.ok(debug.calledThrice);
-				t.strictSame(debug.secondCall.args, ['ava:watcher', 'Files remain that cannot be traced to specific tests: %O', [path.resolve('cannot-be-mapped.js')]]);
+				t.strictSame(debug.secondCall.args, ['ava:watcher', 'Files remain that cannot be traced to specific tests: %O', [path.resolve('cannot-be-mapped.cjs')]]);
 				t.strictSame(debug.thirdCall.args, ['ava:watcher', 'Rerunning all tests']);
 			});
 		});
@@ -1089,7 +1089,7 @@ group('chokidar', (beforeEach, test, group) => {
 			};
 		});
 
-		const t1 = path.join('test', '1.js');
+		const t1 = path.join('test', '1.cjs');
 		const t1Absolute = path.resolve(t1);
 
 		const seed = () => {
@@ -1188,10 +1188,10 @@ group('chokidar', (beforeEach, test, group) => {
 			runStatusEmitter.emit('stateChange', {type: 'worker-finished', testFile});
 		};
 
-		const t1 = path.join('test', '1.js');
-		const t2 = path.join('test', '2.js');
-		const t3 = path.join('test', '3.js');
-		const t4 = path.join('test', '4.js');
+		const t1 = path.join('test', '1.cjs');
+		const t2 = path.join('test', '2.cjs');
+		const t3 = path.join('test', '3.cjs');
+		const t4 = path.join('test', '4.cjs');
 		const t1Absolute = path.resolve(t1);
 		const t2Absolute = path.resolve(t2);
 		const t3Absolute = path.resolve(t3);
@@ -1354,8 +1354,8 @@ group('chokidar', (beforeEach, test, group) => {
 			}));
 
 			const watcher = start();
-			const files = [path.join('test', '1.js'), path.join('test', '2.js')];
-			const filesAbsolute = [path.join('test', '1.js'), path.join('test', '2.js')].map(file => path.resolve(file));
+			const files = [path.join('test', '1.cjs'), path.join('test', '2.cjs')];
+			const filesAbsolute = [path.join('test', '1.cjs'), path.join('test', '2.cjs')].map(file => path.resolve(file));
 			apiEmitter.emit('run', {
 				files,
 				status: runStatus

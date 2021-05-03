@@ -41,7 +41,7 @@ test('classifies files according to the configuration', t => {
 		isHelper: false,
 		isTest: false
 	});
-	t.same(helper.classifyFile(path.join(projectDir, 'tests/test.js')), {
+	t.same(helper.classifyFile(path.join(projectDir, 'tests/test.cjs')), {
 		isHelper: false,
 		isTest: false
 	});
@@ -74,7 +74,7 @@ test('classifies files according to configuration override', t => {
 		isHelper: false,
 		isTest: false
 	});
-	t.same(helper.classifyFile(path.join(overrideDir, 'tests/test.js')), {
+	t.same(helper.classifyFile(path.join(overrideDir, 'tests/test.cjs')), {
 		isHelper: false,
 		isTest: false
 	});

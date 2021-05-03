@@ -4,7 +4,7 @@ import {fileURLToPath} from 'url';
 
 import getStream from 'get-stream';
 
-const __dirname = fileURLToPath(new URL('..', import.meta.url));
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const cliPath = fileURLToPath(new URL('../../entrypoints/cli.mjs', import.meta.url));
 
 export function execCli(args, options, cb) {
