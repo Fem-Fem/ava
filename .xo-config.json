@@ -37,6 +37,12 @@
 			}
 		},
 		{
+			"files": "plugin.d.ts",
+			"rules": {
+				"node/prefer-global/url": "off"
+			}
+		},
+		{
 			"files": "test-{d,tap}/**/*.ts",
 			"rules": {
 				"@typescript-eslint/explicit-function-return-type": "off",
