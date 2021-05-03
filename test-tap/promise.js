@@ -1,9 +1,11 @@
-'use strict';
-require('../lib/chalk').set({level: 0});
-require('../lib/worker/options.cjs').set({});
+import {test} from 'tap';
 
-const {test} = require('tap');
-const Test = require('../lib/test');
+import {set as setChalk} from '../lib/chalk.js';
+import Test from '../lib/test.js';
+import {set as setOptions} from '../lib/worker/options.cjs';
+
+setChalk({level: 0});
+setOptions({});
 
 function ava(fn) {
 	return new Test({

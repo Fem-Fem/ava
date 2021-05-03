@@ -1,5 +1,7 @@
 const {parentPort} = require('worker_threads');
+
 const pEvent = require('p-event');
+
 const test = require('../../../../entrypoints/main.cjs');
 
 test.serial('first pass', async t => {

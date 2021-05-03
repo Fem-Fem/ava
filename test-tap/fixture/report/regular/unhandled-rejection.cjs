@@ -8,7 +8,7 @@ const passes = t => {
 test('passes', passes);
 
 test('unhandled non-error rejection', t => {
-	const err = null;
-	Promise.reject(err);
+	const error = null;
+	Promise.reject(error);
 	t.pass();
 });

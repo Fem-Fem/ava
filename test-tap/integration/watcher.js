@@ -1,8 +1,12 @@
-'use strict';
-const path = require('path');
-const {test} = require('tap');
-const touch = require('touch');
-const {execCli} = require('../helper/cli');
+import path from 'path';
+import {fileURLToPath} from 'url';
+
+import {test} from 'tap';
+import touch from 'touch';
+
+import {execCli} from '../helper/cli.js';
+
+const __dirname = fileURLToPath(new URL('..', import.meta.url));
 
 const END_MESSAGE = 'Type `r` and press enter to rerun tests\nType `u` and press enter to update snapshots\n';
 

@@ -1,12 +1,14 @@
 'use strict';
 
-var _sourceMapFixtures = require('source-map-fixtures');
+const _sourceMapFixtures = require('source-map-fixtures');
 
-var _ = require('../../entrypoints/main.cjs');
+const _ = require('../../entrypoints/main.cjs');
 
-var _2 = _interopRequireDefault(_);
+const _2 = _interopRequireDefault(_);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(object) {
+	return object && object.__esModule ? object : {default: object};
+}
 
 const fixture = (0, _sourceMapFixtures.mapFile)('throws').require();
 
@@ -19,5 +21,5 @@ const fixture = (0, _sourceMapFixtures.mapFile)('throws').require();
 	t.pass();
 });
 const run = () => fixture.run();
-//# sourceMappingURL=./source-map-initial.js.map
+// # sourceMappingURL=./source-map-initial.js.map
 // Generated using node test/fixtures/_generate-source-map-initial.js

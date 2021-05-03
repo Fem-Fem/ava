@@ -1,4 +1,5 @@
 const delay = require('delay');
+
 const test = require('../../entrypoints/main.cjs');
 
 test('slow', async t => {

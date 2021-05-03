@@ -1,14 +1,19 @@
-'use strict';
-require('../lib/chalk').set({level: 0});
-require('../lib/worker/options.cjs').set({});
+import path from 'path';
+import {fileURLToPath} from 'url';
 
-const path = require('path');
-const {test} = require('tap');
-const sinon = require('sinon');
-const delay = require('delay');
-const snapshotManager = require('../lib/snapshot-manager');
-const Test = require('../lib/test');
-const {ava} = require('./helper/ava-test');
+import delay from 'delay';
+import sinon from 'sinon';
+import {test} from 'tap';
+
+import {set as setChalk} from '../lib/chalk.js';
+import snapshotManager from '../lib/snapshot-manager.js';
+import Test from '../lib/test.js';
+import {set as setOptions} from '../lib/worker/options.cjs';
+
+import {ava} from './helper/ava-test.js';
+
+setChalk({level: 0});
+setOptions({});
 
 const failingTestHint = 'Test was expected to fail, but succeeded, you should stop marking the test as failing';
 
@@ -528,7 +533,7 @@ test('assertions are bound', t => {
 
 // Snapshots reused from test/assert.js
 test('snapshot assertion can be skipped', t => {
-	const projectDir = path.join(__dirname, 'fixture');
+	const projectDir = fileURLToPath(new URL('fixture', import.meta.url));
 	const manager = snapshotManager.load({
 		file: path.join(projectDir, 'assert.js'),
 		projectDir,
@@ -554,7 +559,7 @@ test('snapshot assertion can be skipped', t => {
 
 // Snapshots reused from test/assert.js
 test('snapshot assertions call options.skipSnapshot when skipped', async t => {
-	const projectDir = path.join(__dirname, 'fixture');
+	const projectDir = fileURLToPath(new URL('fixture', import.meta.url));
 	const manager = snapshotManager.load({
 		file: path.join(projectDir, 'assert.js'),
 		projectDir,

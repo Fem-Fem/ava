@@ -1,16 +1,18 @@
-'use strict';
-require('../helper/fix-reporter-env')();
+import {fileURLToPath} from 'url';
 
-const path = require('path');
-const {test} = require('tap');
-const TTYStream = require('../helper/tty-stream');
-const report = require('../helper/report');
-const Reporter = require('../../lib/reporters/default');
+import {test} from 'tap';
+
+import Reporter from '../../lib/reporters/default.js';
+import fixReporterEnv from '../helper/fix-reporter-env.js';
+import report from '../helper/report.js';
+import TTYStream from '../helper/tty-stream.js';
+
+fixReporterEnv();
 
 const run = (type, sanitizers = []) => t => {
 	t.plan(1);
 
-	const logFile = path.join(__dirname, `mini.${type.toLowerCase()}.${process.version.split('.')[0]}.log`);
+	const logFile = fileURLToPath(new URL(`mini.${type.toLowerCase()}.${process.version.split('.')[0]}.log`, import.meta.url));
 
 	const tty = new TTYStream({
 		columns: 200,

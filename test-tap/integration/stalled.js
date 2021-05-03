@@ -1,6 +1,6 @@
-'use strict';
-const {test} = require('tap');
-const {execCli} = require('../helper/cli');
+import {test} from 'tap';
+
+import {execCli} from '../helper/cli.js';
 
 test('observable tests fail if event loop empties before they’re resolved', t => {
 	execCli('observable.js', {dirname: 'fixture/stalled-tests'}, (_, stdout) => {

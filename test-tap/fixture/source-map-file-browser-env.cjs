@@ -1,4 +1,5 @@
 const fixture = require('source-map-fixtures').mapFile('throws').require();
+
 const test = require('../../entrypoints/main.cjs');
 
 global.window = function () {};

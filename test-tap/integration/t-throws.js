@@ -1,6 +1,6 @@
-'use strict';
-const {test} = require('tap');
-const {execCli} = require('../helper/cli');
+import {test} from 'tap';
+
+import {execCli} from '../helper/cli.js';
 
 test('improper use of t.throws will be reported to the console', t => {
 	execCli('throws.js', {dirname: 'fixture/improper-t-throws'}, (err, stdout) => {

@@ -1,11 +1,10 @@
-'use strict';
-require('../../lib/chalk').set();
+import path from 'path';
 
-const path = require('path');
-const figures = require('figures');
-const {test} = require('tap');
-const chalk = require('../../lib/chalk').get();
-const prefixTitle = require('../../lib/reporters/prefix-title');
+import figures from 'figures';
+import {test} from 'tap';
+
+import chalk from '../../lib/chalk.js';
+import prefixTitle from '../../lib/reporters/prefix-title.js';
 
 const sep = ' ' + chalk.gray.dim(figures.pointerSmall) + ' ';
 

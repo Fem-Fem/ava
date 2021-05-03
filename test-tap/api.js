@@ -1,14 +1,15 @@
-'use strict';
-require('../lib/chalk').set();
+import fs from 'fs';
+import path from 'path';
+import {fileURLToPath} from 'url';
 
-const path = require('path');
-const fs = require('fs');
-const del = require('del');
-const {test} = require('tap');
-const Api = require('../lib/api');
-const {normalizeGlobs} = require('../lib/globs');
-const providerManager = require('../lib/provider-manager');
+import del from 'del';
+import {test} from 'tap';
 
+import Api from '../lib/api.js';
+import {normalizeGlobs} from '../lib/globs.js';
+import providerManager from '../lib/provider-manager.js';
+
+const __dirname = fileURLToPath(new URL('..', import.meta.url));
 const ROOT_DIR = path.join(__dirname, '..');
 
 function apiCreator(options = {}) {

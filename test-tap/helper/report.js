@@ -1,16 +1,18 @@
-'use strict';
-const childProcess = require('child_process');
-const workerThreads = require('worker_threads');
-const fs = require('fs');
-const path = require('path');
-const globby = require('globby');
-const proxyquire = require('proxyquire');
-const replaceString = require('replace-string');
-const pkg = require('../../package.json');
-const {normalizeGlobs} = require('../../lib/globs');
-const providerManager = require('../../lib/provider-manager');
+import childProcess from 'child_process';
+import fs from 'fs';
+import path from 'path';
+import {fileURLToPath} from 'url';
+import workerThreads from 'worker_threads';
 
-const workerFile = path.join(__dirname, 'report-worker.js');
+import globby from 'globby';
+import proxyquire from 'proxyquire';
+import replaceString from 'replace-string';
+
+import {normalizeGlobs} from '../../lib/globs.js';
+import pkg from '../../lib/pkg.cjs';
+import providerManager from '../../lib/provider-manager.js';
+
+const workerFile = fileURLToPath(new URL('report-worker.js', import.meta.url));
 
 class Worker extends workerThreads.Worker {
 	constructor(filename, options) {
@@ -53,6 +55,9 @@ const createApi = options => {
 	return new _Api(options);
 };
 
+const exports = {};
+export default exports;
+
 exports.assert = (t, logFile, buffer) => {
 	let existing = null;
 	try {
@@ -85,6 +90,7 @@ exports.sanitizers = {
 	version: string => replaceString(string, `v${pkg.version}`, 'v1.0.0-beta.5.1')
 };
 
+const __dirname = fileURLToPath(new URL('..', import.meta.url));
 exports.projectDir = type => path.join(__dirname, '../fixture/report', type.toLowerCase());
 
 const run = (type, reporter, {match = [], filter} = {}) => {

@@ -1,10 +1,14 @@
-'use strict';
-const fs = require('fs');
-const path = require('path');
-const execa = require('execa');
-const {test} = require('tap');
-const tempy = require('tempy');
-const {execCli} = require('../helper/cli');
+import fs from 'fs';
+import path from 'path';
+import {fileURLToPath} from 'url';
+
+import execa from 'execa';
+import {test} from 'tap';
+import tempy from 'tempy';
+
+import {execCli} from '../helper/cli.js';
+
+const __dirname = fileURLToPath(new URL('..', import.meta.url));
 
 for (const object of [
 	{type: 'colocated', rel: '', dir: ''},
@@ -38,8 +42,8 @@ for (const object of [
 }
 
 test('appends to existing snapshots', t => {
-	const cliPath = require.resolve('../../entrypoints/cli.mjs');
-	const avaPath = require.resolve('../../entrypoints/main.cjs');
+	const cliPath = fileURLToPath(new URL('../../entrypoints/cli.mjs', import.meta.url));
+	const avaPath = fileURLToPath(new URL('../../entrypoints/main.cjs', import.meta.url));
 
 	const cwd = tempy.directory();
 	fs.writeFileSync(path.join(cwd, 'package.json'), '{}');

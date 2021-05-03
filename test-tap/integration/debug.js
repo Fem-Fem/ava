@@ -1,6 +1,6 @@
-'use strict';
-const {test} = require('tap');
-const {execCli} = require('../helper/cli');
+import {test} from 'tap';
+
+import {execCli} from '../helper/cli.js';
 
 test('bails when using --watch while while debugging', t => {
 	execCli(['debug', '--watch', 'test.js'], {dirname: 'fixture/watcher', env: {AVA_FORCE_CI: 'not-ci'}}, (err, stdout, stderr) => {

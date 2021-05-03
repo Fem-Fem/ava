@@ -2,12 +2,8 @@
 	"ignores": [
 		"media/**",
 		"test/config/fixtures/config-errors/test.js",
-		"test/config/fixtures/mjs-with-tests/**",
-		"test-tap/fixture/ava-paths/target/test.js",
-		"test-tap/fixture/{source-map-initial,syntax-error}.js",
 		"test-tap/fixture/snapshots/test-sourcemaps/build/**",
-		"test-tap/fixture/power-assert.js",
-		"test-tap/fixture/report/edgecases/ast-syntax-error.js"
+		"test-tap/fixture/report/edgecases/ast-syntax-error.cjs"
 	],
 	"rules": {
 		"import/no-anonymous-default-export": "off",

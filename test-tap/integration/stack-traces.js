@@ -1,6 +1,6 @@
-'use strict';
-const {test} = require('tap');
-const {execCli} = require('../helper/cli');
+import {test} from 'tap';
+
+import {execCli} from '../helper/cli.js';
 
 test('`AssertionError` should capture infinity stack trace', t => {
 	execCli('infinity-stack-trace.js', (err, stdout) => {

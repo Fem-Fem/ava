@@ -1,11 +1,14 @@
-'use strict';
-require('../lib/chalk').set({level: 1});
+import fs from 'fs';
+import {fileURLToPath} from 'url';
 
-const fs = require('fs');
-const tempWrite = require('temp-write');
-const {Instance: ChalkInstance} = require('chalk'); // eslint-disable-line unicorn/import-style
-const {test} = require('tap');
-const codeExcerpt = require('../lib/code-excerpt');
+import ChalkInstance from 'chalk';
+import {test} from 'tap';
+import tempWrite from 'temp-write';
+
+import {set as setChalk} from '../lib/chalk.js';
+import codeExcerpt from '../lib/code-excerpt.js';
+
+setChalk({level: 1});
 
 const chalk = new ChalkInstance({level: 1});
 
@@ -81,13 +84,13 @@ test('noop if file cannot be read', t => {
 });
 
 test('noop if file is not within project', t => {
-	const excerpt = codeExcerpt({isWithinProject: false, file: __filename, line: 1});
+	const excerpt = codeExcerpt({isWithinProject: false, file: fileURLToPath(import.meta.url), line: 1});
 	t.equal(excerpt, null);
 	t.end();
 });
 
 test('noop if file is a dependency', t => {
-	const excerpt = codeExcerpt({isWithinProject: true, isDependency: true, file: __filename, line: 1});
+	const excerpt = codeExcerpt({isWithinProject: true, isDependency: true, file: fileURLToPath(import.meta.url), line: 1});
 	t.equal(excerpt, null);
 	t.end();
 });

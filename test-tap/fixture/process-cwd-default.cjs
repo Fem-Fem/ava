@@ -1,5 +1,7 @@
 const path = require('path');
+
 const pkgConf = require('pkg-conf');
+
 const test = require('../../entrypoints/main.cjs');
 
 test('test', t => {

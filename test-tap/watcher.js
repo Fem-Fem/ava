@@ -1,16 +1,17 @@
-'use strict';
-const path = require('path');
-const EventEmitter = require('events');
-const {PassThrough} = require('stream');
-const fakeTimers = require('@sinonjs/fake-timers');
-const defaultIgnore = require('ignore-by-default').directories();
-const proxyquire = require('proxyquire');
-const sinon = require('sinon');
-const {test} = require('tap');
-const {normalizeGlobs} = require('../lib/globs');
-const {setImmediate} = require('../lib/now-and-timers.cjs');
+import EventEmitter from 'events';
+import path from 'path';
+import {PassThrough} from 'stream';
 
-require('../lib/chalk').set({});
+import fakeTimers from '@sinonjs/fake-timers';
+import ignoreByDefault from 'ignore-by-default';
+import proxyquire from 'proxyquire';
+import sinon from 'sinon';
+import {test} from 'tap';
+
+import {normalizeGlobs} from '../lib/globs.js';
+import {setImmediate} from '../lib/now-and-timers.cjs';
+
+const defaultIgnore = ignoreByDefault.directories();
 
 // Helper to make using beforeEach less arduous
 function makeGroup(test) {

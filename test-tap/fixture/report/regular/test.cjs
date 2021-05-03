@@ -44,6 +44,6 @@ test('bad notThrows', t => {
 });
 
 test('implementation throws non-error', () => {
-	const err = null;
-	throw err;
+	const error = null;
+	throw error;
 });

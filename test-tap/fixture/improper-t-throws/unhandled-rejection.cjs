@@ -1,8 +1,9 @@
 const delay = require('delay');
+
 const test = require('../../../entrypoints/main.cjs');
 
 test('test', async t => {
-	Promise.resolve().then(() => {
+	Promise.resolve().then(() => { // eslint-disable-line promise/prefer-await-to-then
 		t.throws(throwSync());
 	});
 

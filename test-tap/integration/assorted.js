@@ -1,10 +1,14 @@
-'use strict';
-const fs = require('fs');
-const childProcess = require('child_process');
-const path = require('path');
-const stripAnsi = require('strip-ansi');
-const {test} = require('tap');
-const {execCli} = require('../helper/cli');
+import childProcess from 'child_process';
+import fs from 'fs';
+import path from 'path';
+import {fileURLToPath} from 'url';
+
+import stripAnsi from 'strip-ansi';
+import {test} from 'tap';
+
+import {execCli} from '../helper/cli.js';
+
+const __dirname = fileURLToPath(new URL('..', import.meta.url));
 
 test('timeout', t => {
 	execCli(['long-running.js', '-T', '1s'], (err, stdout) => {
