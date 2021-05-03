@@ -1,7 +1,7 @@
 import {promises as fs} from 'fs';
 import path from 'path';
 
-import * as exec from '../../helpers/exec.js';
+import {fixture} from '../../helpers/exec.js';
 import {withTemporaryFixture} from '../../helpers/with-temporary-fixture.js';
 
 export async function testSnapshotPruning(t, {
@@ -19,7 +19,7 @@ export async function testSnapshotPruning(t, {
 
 	if (updating) {
 		// Execute fixture as template to generate snapshots
-		const templateResult = exec.fixture(['--update-snapshots'], {
+		const templateResult = fixture(['--update-snapshots'], {
 			cwd,
 			env: {
 				AVA_FORCE_CI: 'not-ci',
@@ -41,7 +41,7 @@ export async function testSnapshotPruning(t, {
 	// Make a temporary copy of the fixture
 	await withTemporaryFixture(cwd, async cwd => {
 		// Execute fixture as run
-		const run = exec.fixture(cli, {
+		const run = fixture(cli, {
 			cwd,
 			env: {
 				AVA_FORCE_CI: 'not-ci',

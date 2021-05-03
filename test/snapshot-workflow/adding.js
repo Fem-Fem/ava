@@ -3,18 +3,18 @@ import path from 'path';
 
 import test from '@ava/test';
 
-import * as exec from '../helpers/exec.js';
+import {cwd, fixture} from '../helpers/exec.js';
 import {withTemporaryFixture} from '../helpers/with-temporary-fixture.js';
 
 import {beforeAndAfter} from './helpers/macros.js';
 
 test.serial('First run generates a .snap and a .md', async t => {
-	await withTemporaryFixture(exec.cwd('first-run'), async cwd => {
+	await withTemporaryFixture(cwd('first-run'), async cwd => {
 		const env = {
 			AVA_FORCE_CI: 'not-ci'
 		};
 
-		await exec.fixture([], {cwd, env});
+		await fixture([], {cwd, env});
 
 		const [, report] = await Promise.all([
 			t.notThrowsAsync(fs.access(path.join(cwd, 'test.js.snap'))),
@@ -28,7 +28,7 @@ test.serial(
 	'Adding more snapshots to a test adds them to the .snap and .md',
 	beforeAndAfter,
 	{
-		cwd: exec.cwd('adding-snapshots'),
+		cwd: cwd('adding-snapshots'),
 		expectChanged: true
 	}
 );
@@ -37,7 +37,7 @@ test.serial(
 	'Adding a test with snapshots adds them to the .snap and .md',
 	beforeAndAfter,
 	{
-		cwd: exec.cwd('adding-test'),
+		cwd: cwd('adding-test'),
 		expectChanged: true
 	}
 );
@@ -46,7 +46,7 @@ test.serial(
 	'Changing a test\'s title adds a new block, puts the old block at the end',
 	beforeAndAfter,
 	{
-		cwd: exec.cwd('changing-title'),
+		cwd: cwd('changing-title'),
 		expectChanged: true
 	}
 );
@@ -55,7 +55,7 @@ test.serial(
 	'Adding skipped snapshots followed by unskipped snapshots records blanks',
 	beforeAndAfter,
 	{
-		cwd: exec.cwd('adding-skipped-snapshots'),
+		cwd: cwd('adding-skipped-snapshots'),
 		expectChanged: true
 	}
 );
@@ -64,7 +64,7 @@ test.serial(
 	'Filling in blanks doesn\'t require --update-snapshots',
 	beforeAndAfter,
 	{
-		cwd: exec.cwd('filling-in-blanks'),
+		cwd: cwd('filling-in-blanks'),
 		expectChanged: true
 	}
 );

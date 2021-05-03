@@ -3,13 +3,13 @@ import path from 'path';
 
 import test from '@ava/test';
 
-import * as exec from '../helpers/exec.js';
+import {cwd, fixture} from '../helpers/exec.js';
 
 import getSnapshotIds from './helpers/get-snapshot-ids.js';
 
 test('snapshot reports are sorted in declaration order', async t => {
 	const options = {
-		cwd: exec.cwd('report-declaration-order'),
+		cwd: cwd('report-declaration-order'),
 		env: {
 			AVA_FORCE_CI: 'not-ci'
 		}
@@ -21,7 +21,7 @@ test('snapshot reports are sorted in declaration order', async t => {
 		fs.unlinkSync(reportPath);
 	});
 
-	await exec.fixture(['--update-snapshots'], options);
+	await fixture(['--update-snapshots'], options);
 
 	const reportPath = path.join(options.cwd, 'test.js.md');
 

@@ -6,7 +6,7 @@ import test from '@ava/test';
 import {loadConfig} from '../../lib/load-config.js';
 
 const CWD = process.cwd();
-const FIXTURE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../test-tap/fixture/load-config');
+const FIXTURE_ROOT = fileURLToPath(new URL('../../test-tap/fixture/load-config', import.meta.url));
 
 const resolve = relpath => path.resolve(FIXTURE_ROOT, relpath);
 

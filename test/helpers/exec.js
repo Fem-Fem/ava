@@ -6,8 +6,8 @@ import execa from 'execa';
 import defaultsDeep from 'lodash/defaultsDeep.js';
 import replaceString from 'replace-string';
 
-const cliPath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../entrypoints/cli.mjs');
-const ttySimulator = path.join(path.dirname(fileURLToPath(import.meta.url)), './simulate-tty.cjs');
+const cliPath = fileURLToPath(new URL('../../entrypoints/cli.mjs', import.meta.url));
+const ttySimulator = fileURLToPath(new URL('simulate-tty.cjs', import.meta.url));
 
 const TEST_AVA_IMPORT_FROM = path.join(process.cwd(), 'entrypoints/main.cjs');
 

@@ -5,7 +5,7 @@ import * as plugin from 'ava/plugin';
 
 let calledLast = false;
 plugin.registerSharedWorker({
-	filename: new URL('./_worker.js', import.meta.url),
+	filename: new URL('_worker.js', import.meta.url),
 	supportedProtocols: ['experimental'],
 	teardown() {
 		assert(calledLast);
@@ -14,7 +14,7 @@ plugin.registerSharedWorker({
 });
 
 plugin.registerSharedWorker({
-	filename: new URL('./_worker.js', import.meta.url),
+	filename: new URL('_worker.js', import.meta.url),
 	supportedProtocols: ['experimental'],
 	teardown() {
 		calledLast = true;

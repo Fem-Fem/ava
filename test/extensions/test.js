@@ -1,6 +1,6 @@
 import test from '@ava/test';
 
-import * as exec from '../helpers/exec.js';
+import {cleanOutput, cwd, fixture} from '../helpers/exec.js';
 
 for (const [where, which] of [
 	['top-level', 'top-level-duplicates'],
@@ -8,11 +8,11 @@ for (const [where, which] of [
 ]) {
 	test(`errors if ${where} extensions include duplicates`, async t => {
 		const options = {
-			cwd: exec.cwd(which)
+			cwd: cwd(which)
 		};
 
-		const result = await t.throwsAsync(exec.fixture([], options));
+		const result = await t.throwsAsync(fixture([], options));
 
-		t.snapshot(exec.cleanOutput(result.stderr), 'fails with message');
+		t.snapshot(cleanOutput(result.stderr), 'fails with message');
 	});
 }

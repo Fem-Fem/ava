@@ -3,11 +3,11 @@ import path from 'path';
 
 import test from '@ava/test';
 
-import * as exec from '../helpers/exec.js';
+import {cwd, fixture} from '../helpers/exec.js';
 
 test('snapshot files are independent of test resolution order', async t => {
 	const options = {
-		cwd: exec.cwd('intertest-order'),
+		cwd: cwd('intertest-order'),
 		env: {
 			AVA_FORCE_CI: 'not-ci'
 		}
@@ -22,13 +22,13 @@ test('snapshot files are independent of test resolution order', async t => {
 	});
 
 	// Run, updating snapshots.
-	await exec.fixture(['test.js', '--update-snapshots'], options);
+	await fixture(['test.js', '--update-snapshots'], options);
 
 	// Read the resulting file
 	const snapshot = fs.readFileSync(snapshotPath);
 
 	// Run in reversed order, updating snapshots.
-	await exec.fixture(['test.js', '--update-snapshots'], {
+	await fixture(['test.js', '--update-snapshots'], {
 		...options,
 		env: {
 			INTERTEST_ORDER_REVERSE: 'true',

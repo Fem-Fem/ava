@@ -2,7 +2,7 @@ import test from 'ava';
 import * as plugin from 'ava/plugin';
 
 plugin.registerSharedWorker({
-	filename: new URL('./_factory-function.js', import.meta.url),
+	filename: new URL('_factory-function.js', import.meta.url),
 	supportedProtocols: ['experimental']
 });
 

@@ -4,7 +4,7 @@ import path from 'path';
 
 import concordance from 'concordance';
 
-import * as exec from '../../helpers/exec.js';
+import {fixture} from '../../helpers/exec.js';
 import {withTemporaryFixture} from '../../helpers/with-temporary-fixture.js';
 
 function cleanStringDiff(before, after) {
@@ -33,7 +33,7 @@ export async function beforeAndAfter(t, {
 
 	if (updating) {
 		// Run template
-		await exec.fixture(['--update-snapshots'], {
+		await fixture(['--update-snapshots'], {
 			cwd,
 			env: {
 				TEMPLATE: 'true',
@@ -47,7 +47,7 @@ export async function beforeAndAfter(t, {
 	// Copy fixture to a temporary directory
 	await withTemporaryFixture(cwd, async cwd => {
 		// Run fixture
-		await exec.fixture(cli, {cwd, env: {AVA_FORCE_CI: 'not-ci', ...env}});
+		await fixture(cli, {cwd, env: {AVA_FORCE_CI: 'not-ci', ...env}});
 
 		const after = await readSnapshots(cwd);
 

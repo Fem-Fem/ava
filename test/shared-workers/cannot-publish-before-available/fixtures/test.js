@@ -3,7 +3,7 @@ import * as plugin from 'ava/plugin';
 
 test('cannot publish before ready', t => {
 	const worker = plugin.registerSharedWorker({
-		filename: new URL('./_worker.js', import.meta.url),
+		filename: new URL('_worker.js', import.meta.url),
 		supportedProtocols: ['experimental']
 	});
 
